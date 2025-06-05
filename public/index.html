@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反馈交流与意见征集系统平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部区域 -->
+        <div class="top-section">
+            <!-- 搜索栏 -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索发言内容或部门...">
+                    <button onclick="performSearch()" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button onclick="clearSearch()" class="clear-btn" id="clearBtn" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 管理员面板 -->
+            <div class="admin-panel">
+                <div class="admin-login" id="adminLogin">
+                    <input type="password" id="adminPassword" placeholder="管理员密码">
+                    <button onclick="adminLogin()">登录</button>
+                </div>
+                <div class="admin-status" id="adminStatus" style="display: none;">
+                    <span>👑 管理员模式</span>
+                    <button onclick="adminLogout()">退出</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 发言输入区域 -->
+        <div class="post-form">
+            <h1>反馈交流与意见征集系统平台</h1>
+            <div class="form-group">
+                <input type="text" id="department" placeholder="请输入您的部门" maxlength="20">
+                <div class="char-count"><span id="deptCount">0</span>/20</div>
+            </div>
+            <div class="form-group">
+                <textarea id="content" placeholder="请输入您要发表的内容..." maxlength="500"></textarea>
+                <div class="char-count"><span id="contentCount">0</span>/500</div>
+            </div>
+
+            <!-- 图片上传区域 -->
+            <div class="image-upload-section">
+                <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+                    <i class="fas fa-camera"></i>
+                    <span>点击上传图片 (最多5张，每张最大5MB)</span>
+                    <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                </div>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+
+            <!-- 管理员发言选项 -->
+            <div class="admin-post-option" id="adminPostOption" style="display: none;">
+                <label>
+                    <input type="checkbox" id="adminPostCheck">
+                    <span>以管理员身份发言</span>
+                </label>
+            </div>
+
+            <button onclick="submitPost()" id="submitBtn">发布发言</button>
+        </div>
+
+        <!-- 内容展示区域 -->
+        <div class="posts-container" id="postsContainer">
+            <div class="loading">加载中...</div>
+        </div>
+    </div>
+
+    <!-- 回复弹窗 -->
+    <div class="reply-modal" id="replyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>回复发言</h3>
+                <span class="close" onclick="closeReplyModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="replyDepartment" placeholder="请输入您的部门" maxlength="20">
+                    <div class="char-count"><span id="replyDeptCount">0</span>/20</div>
+                </div>
+                <div class="form-group">
+                    <textarea id="replyContent" placeholder="请输入回复内容..." maxlength="300"></textarea>
+                    <div class="char-count"><span id="replyContentCount">0</span>/300</div>
+                </div>
+
+                <!-- 回复图片上传 -->
+                <div class="image-upload-section">
+                    <div class="upload-area" onclick="document.getElementById('replyImageInput').click()">
+                        <i class="fas fa-camera"></i>
+                        <span>点击上传图片 (最多3张)</span>
+                        <input type="file" id="replyImageInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview" id="replyImagePreview"></div>
+                </div>
+
+                <!-- 管理员回复选项 -->
+                <div class="admin-post-option" id="adminReplyOption" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="adminReplyCheck">
+                        <span>以管理员身份回复</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeReplyModal()">取消</button>
+                <button onclick="submitReply()" id="replySubmitBtn">发布回复</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片查看器 -->
+    <div class="image-viewer" id="imageViewer">
+        <div class="viewer-content">
+            <span class="viewer-close" onclick="closeImageViewer()">&times;</span>
+            <img id="viewerImage" src="" alt="">
+            <div class="viewer-nav">
+                <button onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
+                <span id="imageCounter"></span>
+                <button onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
